@@ -1,28 +1,42 @@
 const express = require('express')
 const morgan = require('morgan')
+const dotenv = require('dotenv').config()
+const mongoose = require('mongoose')
+const Blog = require('./models/blog')
+
+// Connect to database
+const URI = process.env.MONGODB_URL;
+
+mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(result => app.listen(3000))
+  .catch(err => console.log(err));
+
 const app = express()
 
 // register view engine
 app.set('view engine', 'ejs')
 
-app.listen(3000)
-
 // middleware and static files
 app.use(morgan('dev'))
 app.use(express.static('public')) // gör så att appen har tillgång till statiska filer i public, dessa är publika och syns offentligt. 
 
+// Routes
 // Renderar vyn index som ligger i mappen views
 app.get('/', (req, res)=>{
-    const blogs = [
-        {title: 'Title 1', snippet: 'Content blablablab'},
-        {title: 'Title 2', snippet: 'Content blablablab'},
-        {title: 'Title 3', snippet: 'Content blablablab'}
-    ]
-    res.render('index', { title: 'Home', blogs })
+    res.redirect('/blogs')
 })
 
 app.get('/about', (req, res)=>{
     res.render('about', { title: 'About' })
+})
+
+// blog routes
+app.get('/blogs', (req, res)=>{
+    Blog.find().sort({createdAt: -1}).then((result)=>{
+        res.render('index', { title: 'All Blogs', blogs: result })
+    }).catch((err)=>{
+        console.log(err)
+    })
 })
 
 app.get('/blogs/create', (req,res)=>{
@@ -31,4 +45,4 @@ app.get('/blogs/create', (req,res)=>{
 
 app.use((req, res)=>{
     res.status(404).render('404', { title: '404' })
-})
+}) 
