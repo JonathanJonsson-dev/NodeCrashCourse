@@ -8,7 +8,12 @@ app.listen(3000)
 
 // Renderar vyn index som ligger i mappen views
 app.get('/', (req, res)=>{
-    res.render('index', { title: 'Home' })
+    const blogs = [
+        {title: 'Title 1', snippet: 'Content blablablab'},
+        {title: 'Title 2', snippet: 'Content blablablab'},
+        {title: 'Title 3', snippet: 'Content blablablab'}
+    ]
+    res.render('index', { title: 'Home', blogs })
 })
 
 app.get('/about', (req, res)=>{
