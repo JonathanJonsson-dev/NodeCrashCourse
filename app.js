@@ -1,10 +1,15 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 
 // register view engine
 app.set('view engine', 'ejs')
 
 app.listen(3000)
+
+// middleware and static files
+app.use(morgan('dev'))
+app.use(express.static('public')) // gör så att appen har tillgång till statiska filer i public, dessa är publika och syns offentligt. 
 
 // Renderar vyn index som ligger i mappen views
 app.get('/', (req, res)=>{
