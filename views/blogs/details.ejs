@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('./layouts/head.ejs') %> 
+    <%- include('../layouts/head.ejs') %> 
 <body>
-    <%- include('./layouts/nav.ejs') %> 
+    <%- include('../layouts/nav.ejs') %> 
 
     <div class="details content">
         <h2> <%= blog.title %>  </h2>
@@ -12,7 +12,7 @@
         <a class=delete data-doc="<%= blog._id %>">Delete</a>
     </div>
 
-    <%- include('./layouts/footer.ejs') %> 
+    <%- include('../layouts/footer.ejs') %> 
 
     <script>
         const trashcan = document.querySelector('a.delete')
