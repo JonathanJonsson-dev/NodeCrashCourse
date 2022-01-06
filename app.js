@@ -7,6 +7,8 @@ const { render } = require('express/lib/response')
 const { response } = require('express')
 const blogRoutes = require('./routes/blogRoutes')
 
+const usersRoutes = require('./routes/userRoutes')
+
 // Connect to database
 const URI = process.env.MONGODB_URL;
 
@@ -26,6 +28,7 @@ app.use(express.urlencoded({ extended: true})) // Takes all url encoded data and
 
 // Blog Routes
 app.use('/blogs', blogRoutes)
+app.use('/users/cool', usersRoutes)
 
 // Renderar vyn index som ligger i mappen views
 app.get('/', (req, res)=>{
